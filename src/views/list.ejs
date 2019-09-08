@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>My Todo List</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/offcanvas/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="offcanvas.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom border-gray">
+    <div class="container">
+        <a class="navbar-brand mr-auto mr-lg-0" href="#">Todo</a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+
+                <a href="#">
+                    <button type="button" class="btn btn-outline-primary btn-sm mx-2">Login</button>
+                </a>
+                <a href="#">
+                    <button type="button" class="btn btn-primary btn-sm mx-2">Sign Up</button>
+                </a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown">@<%= username %>
+                        %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="/logout">logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="py-5 text-center">
+        <i class="d-block mx-auto mb-4"></i>
+        <h2>Todo List</h2>
+        <p class="lead">manage your list</p>
+    </div>
+
+    <% if(msgSuccess) { %>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> <%= msgSuccess %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    <% } %>
+
+    <div class="row">
+        <div class="my-0 p-3 col-md-5 offset-md-1 bg-white rounded shadow-sm">
+            <div class="media text-muted pt-3">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <h3 class="pb-0 mb-0">My List</h3>
+                        <a href="/todo/all/action/done">
+                            <button type="button" class="btn btn-outline-danger btn-sm">Mark all as Done</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% if(todos.length > 0) { %>
+                <% for(let todo of todos) { %>
+                    <div class="media text-muted pt-3">
+                        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <div class="d-flex justify-content-between align-items-center w-100">
+                                <strong class="text-gray-dark"><%= todo.title %></strong>
+                                <p>
+                                    <a href="/todo/<%= todo.id %>/action/edit">Edit</a> |
+                                    <a href="/todo/<%= todo.id %>/action/done">Mark as Done</a>
+                                </p>
+                            </div>
+                            <p class="d-block"><%= todo.description %></p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div class="media text-muted pt-3">
+                    <div class="media-body pb-3 mb-0 small lh-125">
+                        <p class="lead">No Todo...</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="my-0 p-3 col-md-4 offset-md-1 bg-white rounded shadow-sm">
+            <h6 class="border-bottom border-gray pb-2 mb-0">Create New Todo</h6>
+            <form action="/todo" method="post">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Title</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1"
+                           placeholder="ex. buy milk..." name="title">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                              placeholder="your todo description" name="description"></textarea>
+                </div>
+                <input type="submit" class="btn btn-success btn-sm btn-block" value="Create now!"/>
+            </form>
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
